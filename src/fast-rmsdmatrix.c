@@ -624,7 +624,7 @@ void read_TrajectoryFile(char *TrajFileName, traj *Trajectory){
 
     /* Opening and check if it exist and if it is empty */
     ft = fopen(TrajFileName, "r");
-    printf("\nReading Trajectory FILE...\n");
+    printf("Reading Trajectory FILE %s\n", TrajFileName);
 
     //check_empty_file(ft, TrajFileName);
 
@@ -803,8 +803,9 @@ int main(int argc, char *argv[]) {
     */
     time_t seconds;
     time_t seconds_ref = time(NULL);
+    printf("Starting program at %s\n", ctime(&seconds_ref));
 
-    printf("reading trajectory %s\n", argv[1]);
+    printf("input trajectory %s\n", argv[1]);
     printf("core index is %s\n", argv[2]);
     printf("number of pairs is %s\n", argv[3]);
     printf("starting pair is %s-%s\n", argv[4], argv[5]);
@@ -827,13 +828,10 @@ int main(int argc, char *argv[]) {
     traj *Ligand_Trajectory = malloc (sizeof(traj));
     
     printf("frames = %d\n", Trajectory->frames);
-    // computing parameters and allocating objects
     printf("overall pairs = %d\n", Trajectory->pairs);
     
     // read trajectory
-    printf("reading trajectory\n");
     read_TrajectoryFile(argv[1], Trajectory);
-    printf("trajectory read\n");
     alignments *align = malloc (sizeof(alignments));
     align->rmsd_mat = d1t(Trajectory->pairs);
     align->ref_structs = i1t(Trajectory->pairs);
@@ -842,7 +840,7 @@ int main(int argc, char *argv[]) {
 
     char out_filename[100];
     if (argc == 10){
-        printf("reading ligand trajectory %s\n", argv[4]);
+        printf("loading ligand data\n");
 
         int ligand_atomnum = atoi(argv[9]);
         Ligand_Trajectory->frames = rec_frames;
