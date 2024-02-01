@@ -6,7 +6,7 @@ CC = gcc
 
 # Compiler flags
 
-CFLAGS = -Wall -O3 -fopenmp -march=native -std=c99
+CFLAGS = -Wall -O3 -march=native -std=c99
 
 # Linker flags
 
