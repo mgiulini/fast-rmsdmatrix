@@ -8,7 +8,6 @@
 #include <math.h>
 //#include <my_malloc.h>
 #include <time.h>
-#include <omp.h>
 #include <sys/types.h>
 #include <unistd.h>
 #include <limits.h>
