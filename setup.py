@@ -22,9 +22,7 @@ def read(*names, **kwargs) -> str:
 
 
 # activate once added, do not remove
-long_description = '{}\n{}'.format(
-    read('README.md'),
-    )
+long_description = read('README.md')
 
 
 setup(
@@ -51,7 +49,7 @@ setup(
         },
     setup_requires=[
         ],
-    entry_points={
-        'console_scripts': [ 'fast-rmsdmatrix = fast-rmsdmatrix.cli:main' ],
-        },
+    #entry_points={
+    #    'console_scripts': [ 'fast-rmsdmatrix-exe = src.cli:main' ],
+    #    },
     )
