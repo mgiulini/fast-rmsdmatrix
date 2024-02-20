@@ -1,12 +1,8 @@
-/*! \mainpage fast-rmsdmatrix
- *
- */
 #define  _GNU_SOURCE
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
-//#include <my_malloc.h>
 #include <time.h>
 #include <sys/types.h>
 #include <unistd.h>
@@ -421,6 +417,19 @@ double optimal_alignment(double **x, double **y, int cgnum, double u[][3]) {
 }
 
 void cycle_ilrmsd(traj *Trajectory, traj *Ligand_Trajectory, alignments *align, int start_pair[2]) {
+    /**
+    * routine that cycles over pairs of frames in a trajectory, aligning on the receptor
+    * and computing the interface ligand rmsd
+    * 
+    * Parameters
+    * ----------
+    * 
+    * `Trajectory` : traj object
+    * 
+    * `align` : alignments object
+    * 
+    * `start_pair` : pair of structures to begin with
+    */
     int n;
     int i, j;
     double **x, **y, **xlig, **ylig, **ylig_rot;
@@ -629,8 +638,6 @@ void read_TrajectoryFile(char *TrajFileName, traj *Trajectory){
 
     rows_i = n_rows(ft);                                // Number of rows in trajectory file "ft".
     fseek(ft, 0, SEEK_SET);
-
-    //string = (char *) malloc (rows_i/Trajectory->frames);                  // Allocate char string;
    
     line   = (char *) malloc (200); 					     // Allocate char line with size (lenght) = 200; 
 									     // We are sure that the lenght of each line is less than 200
@@ -821,10 +828,7 @@ int main(int argc, char *argv[]) {
     Trajectory->frames = rec_frames;
     Trajectory->n_at = rec_atomnum;
     Trajectory->traj_coords = d2t(rec_frames, 3 * rec_atomnum);
-    //Trajectory->pairs = rec_frames * (rec_frames - 1) / 2;
     Trajectory->pairs = npairs;
-    // if there are arguments 4 to 6, it is the ligand trajectory, frames and atomnum
-    traj *Ligand_Trajectory = malloc (sizeof(traj));
     
     printf("frames = %d\n", Trajectory->frames);
     printf("overall pairs = %d\n", Trajectory->pairs);
@@ -839,6 +843,8 @@ int main(int argc, char *argv[]) {
 
     char out_filename[100];
     if (argc == 10){
+        // if there are arguments 8 to 10, it is the ligand trajectory, frames and atomnum
+        traj *Ligand_Trajectory = malloc (sizeof(traj));
         printf("loading ligand data\n");
 
         int ligand_atomnum = atoi(argv[9]);
