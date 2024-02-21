@@ -26,8 +26,10 @@ EXEC = fast-rmsdmatrix
 
 # Default target
 
-all:
-	make $(EXEC)
+all: $(EXEC)
+	
+$(EXEC): $(OBJ)
+	$(CC) $(CFLAGS) -o $@ $^ $(LDFLAGS)
 
 # Clean
 
