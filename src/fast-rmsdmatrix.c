@@ -378,6 +378,7 @@ double optimal_alignment(double **x, double **y, int cgnum, double u[][3]) {
     if (isnan(e) == 1) {
         printf("Found a NaN in Kabsch alignment at checkpoint 5 | \n");
         printf("e %lf e0 %lf e1 %lf e2 %lf e3 %lf\n", e, e0, eigenvalues[0], eigenvalues[1], eigenvalues[2]);
+        e = 0.000001;
     }
 /********************/
     e = 2.0 * e / cgnum;
@@ -633,6 +634,15 @@ void read_TrajectoryFile(char *TrajFileName, traj *Trajectory){
     /* Opening and check if it exist and if it is empty */
     ft = fopen(TrajFileName, "r");
     printf("Reading Trajectory FILE %s\n", TrajFileName);
+
+    // check if the file exists
+    if (ft == NULL){
+        fe = fopen("error.dat", "w");
+        fprintf(fe, "Error. The file %s does not exist. Aborting\n", TrajFileName);
+        printf("Error. The file %s does not exist. Aborting\n", TrajFileName);
+        fclose(fe);
+        exit(EXIT_FAILURE);
+    }
 
     //check_empty_file(ft, TrajFileName);
 
