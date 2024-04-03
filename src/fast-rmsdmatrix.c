@@ -378,7 +378,6 @@ double optimal_alignment(double **x, double **y, int cgnum, double u[][3]) {
     if (isnan(e) == 1) {
         printf("Found a NaN in Kabsch alignment at checkpoint 5 | \n");
         printf("e %lf e0 %lf e1 %lf e2 %lf e3 %lf\n", e, e0, eigenvalues[0], eigenvalues[1], eigenvalues[2]);
-        e = 0.000001;
     }
 /********************/
     e = 2.0 * e / cgnum;
@@ -403,7 +402,10 @@ double optimal_alignment(double **x, double **y, int cgnum, double u[][3]) {
         }
     }
     e = sqrt(e);
-    if (isnan(e) == 1) printf("Found a NaN in Kabsch alignment at checkpoint 6\n");
+    if (isnan(e) == 1) {
+        printf("Found a NaN in Kabsch alignment at checkpoint 6. Setting e to 20.0\n");
+        e = 20.0;
+    }
 /********************/
     // filling rotation_matrix
     for (i = 0; i < 3; i++) {
